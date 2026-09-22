@@ -199,6 +199,8 @@ export interface Ticket {
   name: string;
   priority: string;
   raised_by: string;
+  cc: string;
+  bcc: string;
   resolution_by: string;
   response_by: string;
   first_responded_on: string;
