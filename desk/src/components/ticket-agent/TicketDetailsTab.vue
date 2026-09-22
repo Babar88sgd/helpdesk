@@ -182,7 +182,14 @@ const { notifyTicketUpdate } = useNotifyTicketUpdate(ticket.value?.name);
 const dateFormat = window.date_format;
 const { getStatus, colorMap } = useTicketStatusStore();
 
-const CORE_FIELDS = ["priority", "ticket_type", "customer", "agent_group"];
+const CORE_FIELDS = [
+  "priority",
+  "ticket_type",
+  "customer",
+  "agent_group",
+  "cc",
+  "bcc",
+];
 
 const coreFields = computed(() => {
   const fieldsMeta = getFields();

@@ -22,8 +22,8 @@
     ref="communicationAreaRef"
     :ticketId="String(ticket.doc?.name)"
     :to-emails="[ticket.doc?.raised_by]"
-    :cc-emails="[]"
-    :bcc-emails="[]"
+    :cc-emails="splitEmails(ticket.doc?.cc)"
+    :bcc-emails="splitEmails(ticket.doc?.bcc)"
     :key="ticket.doc?.name"
     @update="reloadTicketFeed(String(ticket.doc?.name))"
   />
@@ -49,6 +49,16 @@ import LucideChartNoAxesColumn from "~icons/lucide/chart-no-axes-column";
 import TicketTimeline from "./timeline/TicketTimeline.vue";
 
 const ticket = inject(TicketSymbol)!;
+
+// Ticket-level CC/BCC (set on the main ticket form) are used as the default
+// recipients on every reply, so agents don't have to retype them each time.
+function splitEmails(value?: string): string[] {
+  if (!value) return [];
+  return value
+    .split(",")
+    .map((email) => email.trim())
+    .filter(Boolean);
+}
 
 const communicationAreaRef = ref<InstanceType<typeof CommunicationArea> | null>(
   null
