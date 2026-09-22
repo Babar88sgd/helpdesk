@@ -224,6 +224,10 @@ const options = computed(() => ({
   selectable: true,
   showSelectBanner: true,
   selectBannerActions,
+  // A ticket the current user hasn't opened yet gets a solid black row with
+  // white text in the list, instead of just semibold text, so it's obvious
+  // at a glance which tickets are new/updated - like an unread email.
+  highlightUnread: true,
   emptyState: {
     title: __("No tickets found"),
     icon: h(TicketIcon, {
