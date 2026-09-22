@@ -12,6 +12,8 @@
   "subject_section",
   "subject",
   "raised_by",
+  "cc",
+  "bcc",
   "status",
   "priority",
   "status_category",
@@ -97,6 +99,18 @@
    "oldfieldname": "raised_by",
    "oldfieldtype": "Data",
    "options": "Email"
+  },
+  {
+   "fieldname": "cc",
+   "fieldtype": "Small Text",
+   "label": "CC",
+   "description": "Comma separated list of email addresses to CC on every reply for this ticket."
+  },
+  {
+   "fieldname": "bcc",
+   "fieldtype": "Small Text",
+   "label": "BCC",
+   "description": "Comma separated list of email addresses to BCC on every reply for this ticket."
   },
   {
    "fieldname": "status",
