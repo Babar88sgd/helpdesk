@@ -36,7 +36,10 @@
           :key="row.name"
           v-slot="{ idx, column, item }"
           :row="row"
-          class="truncate text-base row"
+          :class="[
+            'truncate text-base row',
+            highlightUnread && isUnreadRow(row) && 'hd-unread-row',
+          ]"
         >
           <slot v-bind="{ idx, column, item, row }" />
         </ListRow>
@@ -49,7 +52,10 @@
       :key="row.name"
       v-slot="{ idx, column, item }"
       :row="row"
-      class="truncate text-base"
+      :class="[
+        'truncate text-base',
+        highlightUnread && isUnreadRow(row) && 'hd-unread-row',
+      ]"
     >
       <slot v-bind="{ idx, column, item, row }" />
     </ListRow>
@@ -66,7 +72,11 @@ import {
 } from "frappe-ui/experimental";
 import { computed, ref, watch } from "vue";
 
+import { useAuthStore } from "@/stores/auth";
 import IconMoreHorizontal from "~icons/lucide/more-horizontal";
+
+const { userId } = useAuthStore();
+
 const props = defineProps({
   rows: {
     type: Array,
@@ -76,7 +86,20 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  // When true, a row that the current user has not yet seen (per the
+  // framework's `_seen` field) is rendered with a solid black background
+  // and white text, instead of the default light bold treatment.
+  highlightUnread: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+function isUnreadRow(row) {
+  if (!row) return false;
+  const seenBy = row._seen ? JSON.parse(row._seen) : [];
+  return !seenBy.includes(userId || "");
+}
 
 const groupedRows = ref(props.rows);
 
@@ -105,4 +128,13 @@ let showGroupedRows = computed(() => {
 });
 </script>
 
-<style></style>
+<style>
+/* Unread ticket row: solid black background, white text everywhere inside
+   it (overriding whatever color classes the individual cell renderers use),
+   so an unread ticket is unmistakable at a glance. */
+.hd-unread-row,
+.hd-unread-row * {
+  background-color: black !important;
+  color: white !important;
+}
+</style>

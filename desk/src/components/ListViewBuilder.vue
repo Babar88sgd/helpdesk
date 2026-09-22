@@ -73,6 +73,7 @@
       :rows="rows"
       v-slot="{ idx, column, item, row }"
       :group-by-actions="options.groupByActions"
+      :highlight-unread="options.highlightUnread"
       @scrollend="handleListScroll"
       class="list-rows"
     >
