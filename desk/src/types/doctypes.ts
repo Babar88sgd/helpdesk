@@ -37,6 +37,10 @@ export interface HDTicket extends DocType {
   subject: string;
   /** Raised By (Email): Data */
   raised_by?: string;
+  /** CC: Small Text */
+  cc?: string;
+  /** BCC: Small Text */
+  bcc?: string;
   /** Status: Link (HD Ticket Status) */
   status?: string;
   /** Priority: Link (HD Ticket Priority) */
